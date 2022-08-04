@@ -5,8 +5,8 @@ import javax.persistence.GeneratedValue
 import javax.persistence.Id
 
 @Entity
-data class User(
-    @Id @GeneratedValue var id: Long,
+class User(
+    @Id @GeneratedValue var id: Long = -1,
     var userName: String,
     var userPassword: String,
     var userRegisterTime: String
