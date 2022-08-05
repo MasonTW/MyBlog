@@ -1,6 +1,7 @@
 package com.mx.blog.controller
 
 import com.mx.blog.DTO.ArticleCreateDTO
+import com.mx.blog.entity.Article
 import com.mx.blog.service.ArticleService
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
@@ -14,5 +15,11 @@ class ArticleController(
     @ResponseBody
     fun createArticle(@RequestBody articleCreateDTO: ArticleCreateDTO, session: HttpSession) {
         articleService.createArticle(articleCreateDTO, session)
+    }
+
+    @GetMapping("/article/{userName}")
+    @ResponseBody
+    fun getArticlesByUserName(@PathVariable userName: String): List<Article> {
+       return articleService.getArticlesByUserName(userName)
     }
 }

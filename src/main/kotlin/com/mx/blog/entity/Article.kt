@@ -6,9 +6,10 @@ import javax.persistence.Id
 
 @Entity
 class Article(
-    @Id @GeneratedValue var articleId: Long = -1,
+    @Id @GeneratedValue() var articleId: Long = -1,
     var articleTitle: String,
     var articleAddTime: String,
+    var articleUpdateTime: String,
     var articleContent: String,
     var articleStar: Int = 0,
     var articleLookTimes: Int = 0,
