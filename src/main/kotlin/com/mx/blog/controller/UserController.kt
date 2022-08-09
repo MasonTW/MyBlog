@@ -26,7 +26,7 @@ class UserController(
        return userService.login(userRegisterDTO, session)
     }
 
-    @PostMapping("/user")
+    @PostMapping("/register")
     @ResponseBody
     fun createUser(@RequestBody userRegisterDTO: UserRegisterDTO): UserDTO{
         val createUser = userService.createUser(userRegisterDTO)

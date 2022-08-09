@@ -1,11 +1,11 @@
 package com.mx.blog.service
 
 import com.mx.blog.DTO.ArticleCreateDTO
+import com.mx.blog.DTO.ArticleGetDTO
 import com.mx.blog.entity.Article
 import com.mx.blog.repository.ArticleRepository
 import com.mx.blog.repository.UserRepository
 import org.springframework.stereotype.Service
-import java.time.LocalDateTime
 import javax.servlet.http.HttpSession
 
 @Service
@@ -20,12 +20,25 @@ class ArticleService(
             articleAddTime = System.currentTimeMillis().toString(),
             articleUpdateTime = System.currentTimeMillis().toString(),
             articleUserId = session.getAttribute("userId") as Long,
+            comments = mutableListOf()
         )
         return articleRepository.save(newArticle)
     }
 
-    fun getArticlesByUserName(userName: String): List<Article> {
+    fun getArticlesByUserName(userName: String): List<ArticleGetDTO> {
         val userId = userRepository.findByUserName(userName).id
-        return articleRepository.findAllByArticleUserId(userId)
+        return articleRepository.findAllByArticleUserId(userId).map { articleMapper(it) }
     }
+
+    private fun articleMapper(article: Article): ArticleGetDTO {
+        return ArticleGetDTO(
+            articleTitle = article.articleTitle,
+            articleContent = article.articleContent,
+            articleStar = article.articleStar,
+            articleCollectionNum = article.articleCollectionNum,
+            articleLookTimes = article.articleLookTimes,
+            comments = article.comments
+        )
+    }
+
 }

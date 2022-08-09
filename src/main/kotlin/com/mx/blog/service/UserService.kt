@@ -23,17 +23,16 @@ class UserService(
 
     fun createUser(userRegisterDTO: UserRegisterDTO): User {
         val newUser = User(
-
             userName = userRegisterDTO.userName,
             userPassword = userRegisterDTO.userPassword,
             userRegisterTime = LocalDateTime.now().toString(),
+            userAccount = userRegisterDTO.userAccount,
         )
         return userRepository.save(newUser)
     }
 
     fun login(userRegisterDTO: UserRegisterDTO, session: HttpSession): Boolean {
-        val findResult = userRepository.findByUserName(userRegisterDTO.userName)
-
+        val findResult = userRepository.findByUserAccount(userAccount = userRegisterDTO.userAccount)
         return if (findResult.userPassword == userRegisterDTO.userPassword) {
             session.setAttribute("userId",findResult.id)
             true

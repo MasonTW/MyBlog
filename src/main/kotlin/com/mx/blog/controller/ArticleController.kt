@@ -1,6 +1,7 @@
 package com.mx.blog.controller
 
 import com.mx.blog.DTO.ArticleCreateDTO
+import com.mx.blog.DTO.ArticleGetDTO
 import com.mx.blog.entity.Article
 import com.mx.blog.service.ArticleService
 import org.springframework.stereotype.Controller
@@ -19,7 +20,7 @@ class ArticleController(
 
     @GetMapping("/article/{userName}")
     @ResponseBody
-    fun getArticlesByUserName(@PathVariable userName: String): List<Article> {
+    fun getArticlesByUserName(@PathVariable userName: String): List<ArticleGetDTO> {
        return articleService.getArticlesByUserName(userName)
     }
 }
