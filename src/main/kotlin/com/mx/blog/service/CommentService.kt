@@ -15,14 +15,18 @@ import javax.servlet.http.HttpSession
 class CommentService(
    private val commentRepository: CommentRepository,
 ) {
-    fun addComment(comment: String, articleId: Long, session: HttpSession) {
+    fun addComment(comment: String, articleId: Long, session: HttpSession): Comment {
         val newComment = Comment(
             articleId = articleId,
             commentTime = System.currentTimeMillis().toString(),
             commentContent = comment,
             userId = session.getAttribute("userId") as Long
         )
-        commentRepository.save(newComment)
+       return  commentRepository.save(newComment)
+    }
+
+    fun deleteComment(commentId: Long) {
+        return commentRepository.deleteById(commentId)
     }
 
 }

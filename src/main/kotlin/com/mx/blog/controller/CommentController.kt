@@ -2,6 +2,7 @@ package com.mx.blog.controller
 
 import com.mx.blog.DTO.ArticleCreateDTO
 import com.mx.blog.entity.Article
+import com.mx.blog.entity.Comment
 import com.mx.blog.service.ArticleService
 import com.mx.blog.service.CommentService
 import org.springframework.stereotype.Controller
@@ -14,8 +15,14 @@ class CommentController(
 ){
     @PostMapping("/article/{articleId}")
     @ResponseBody
-    fun addComment(@RequestParam comment: String, @PathVariable articleId: Long, session: HttpSession) {
-        commentService.addComment(comment, articleId, session)
+    fun addComment(@RequestParam comment: String, @PathVariable articleId: Long, session: HttpSession): Comment  {
+        return commentService.addComment(comment, articleId, session)
+    }
+
+    @PostMapping("/comment/{commentId}")
+    @ResponseBody
+    fun deleteComment(@PathVariable commentId: Long) {
+        commentService.deleteComment(commentId)
     }
 
 }
