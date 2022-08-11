@@ -14,5 +14,7 @@ class Article(
     var articleCollectionNum: Int = 0,
     var articleUserId: Long,
     @OneToMany(targetEntity = Comment::class, cascade = [CascadeType.ALL], mappedBy = "articleId")
-    val comments: MutableList<Comment>
+    var comments: MutableList<Comment>,
+    @OneToOne(targetEntity = Agreement::class, cascade = [CascadeType.ALL])
+    var agreement: Agreement?,
 )

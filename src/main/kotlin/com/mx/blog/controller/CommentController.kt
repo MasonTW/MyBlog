@@ -16,7 +16,7 @@ class CommentController(
     @PostMapping("/article/{articleId}")
     @ResponseBody
     fun addComment(@RequestParam comment: String, @PathVariable articleId: Long, session: HttpSession): Comment  {
-        return commentService.addComment(comment, articleId, session)
+         return commentService.addComment(comment, articleId, session)
     }
 
     @PostMapping("/comment/{commentId}")

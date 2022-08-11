@@ -2,6 +2,7 @@ package com.mx.blog.service
 
 import com.mx.blog.DTO.ArticleCreateDTO
 import com.mx.blog.DTO.ArticleGetDTO
+import com.mx.blog.entity.Agreement
 import com.mx.blog.entity.Article
 import com.mx.blog.repository.ArticleRepository
 import com.mx.blog.repository.UserRepository
@@ -20,7 +21,8 @@ class ArticleService(
             articleAddTime = System.currentTimeMillis().toString(),
             articleUpdateTime = System.currentTimeMillis().toString(),
             articleUserId = session.getAttribute("userId") as Long,
-            comments = mutableListOf()
+            comments = mutableListOf(),
+            agreement = null
         )
         return articleRepository.save(newArticle)
     }
@@ -31,13 +33,15 @@ class ArticleService(
     }
 
     private fun articleMapper(article: Article): ArticleGetDTO {
+        val agreement = article.agreement
         return ArticleGetDTO(
             articleTitle = article.articleTitle,
             articleContent = article.articleContent,
             articleStar = article.articleStar,
             articleCollectionNum = article.articleCollectionNum,
             articleLookTimes = article.articleLookTimes,
-            comments = article.comments
+            comments = article.comments,
+            agreementNum = agreement?.agreementNum ?: 0
         )
     }
 
