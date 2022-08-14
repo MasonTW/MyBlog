@@ -1,8 +1,6 @@
 package com.mx.blog.entity
 
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
+import javax.persistence.*
 
 @Entity
 class User(
@@ -10,5 +8,7 @@ class User(
     var userAccount: String,
     var userName: String,
     var userPassword: String,
-    var userRegisterTime: String
+    var userRegisterTime: String,
+    @OneToMany(targetEntity = Collection::class, cascade = [CascadeType.ALL], mappedBy = "userId")
+    var collections: List<Collection> = mutableListOf()
     )

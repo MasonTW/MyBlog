@@ -1,9 +1,8 @@
 package com.mx.blog.controller
 
+import com.mx.blog.DTO.ArticleBasicDTO
 import com.mx.blog.DTO.ArticleCreateDTO
-import com.mx.blog.DTO.ArticleGetDTO
 import com.mx.blog.entity.Agreement
-import com.mx.blog.entity.Comment
 import com.mx.blog.service.AgreementService
 import com.mx.blog.service.ArticleService
 import org.springframework.stereotype.Controller
@@ -21,10 +20,28 @@ class ArticleController(
         articleService.createArticle(articleCreateDTO, session)
     }
 
+    @PostMapping("/article/update")
+    @ResponseBody
+    fun updateArticle(@RequestBody articleUpdateDTO: ArticleBasicDTO, articleId: Long) {
+        articleService.updateArticle(articleUpdateDTO, articleId)
+    }
+
+    @PostMapping("/article/{articleId}")
+    @ResponseBody
+    fun deleteArticle(@PathVariable articleId: Long, session: HttpSession) {
+        articleService.deleteArticle(articleId)
+    }
+
     @GetMapping("/article/{userName}")
     @ResponseBody
-    fun getArticlesByUserName(@PathVariable userName: String): List<ArticleGetDTO> {
+    fun getArticlesByUserName(@PathVariable userName: String): List<ArticleCreateDTO> {
        return articleService.getArticlesByUserName(userName)
+    }
+
+    @GetMapping("/article/random")
+    @ResponseBody
+    fun getRandomTenArticles(): List<ArticleCreateDTO> {
+        return articleService.getRandomTenArticles()
     }
 
     @PostMapping("/article/{articleId}/agreement")
