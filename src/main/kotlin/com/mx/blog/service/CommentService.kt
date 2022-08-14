@@ -1,5 +1,6 @@
 package com.mx.blog.service
 
+import com.mx.blog.DTO.CommentDTO
 import com.mx.blog.DTO.UserDTO
 import com.mx.blog.DTO.UserRegisterDTO
 import com.mx.blog.entity.Comment
@@ -27,6 +28,14 @@ class CommentService(
 
     fun deleteComment(commentId: Long) {
         return commentRepository.deleteById(commentId)
+    }
+
+    fun getArticleComments(articleId: Long): List<CommentDTO> {
+        return commentRepository.findAllByArticleId(articleId).map { commentDTOMapper(it) }
+    }
+
+    private fun commentDTOMapper(comment: Comment): CommentDTO{
+        return CommentDTO(userId = comment.userId, commentStar = comment.commentStar, commentContent = comment.commentContent)
     }
 
 }
