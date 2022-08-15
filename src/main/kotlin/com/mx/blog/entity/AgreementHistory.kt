@@ -1,10 +1,9 @@
 package com.mx.blog.entity
 
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
+import javax.persistence.*
 
 @Entity
+@Table(indexes = [Index(name = "index_tb_agreementUserId", columnList = "agreementUserId")])
 class AgreementHistory(
     @Id @GeneratedValue var id: Long = -1,
     var articleId: Long,
