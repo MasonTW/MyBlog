@@ -4,7 +4,7 @@ import javax.persistence.*
 
 @Entity
 class Article(
-    @Id @GeneratedValue var articleId: Long = -1,
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) var articleId: Long = -1,
     var articleTitle: String,
     var articleAddTime: String,
     var articleUpdateTime: String,

@@ -4,7 +4,7 @@ import javax.persistence.*
 
 @Entity
 class User(
-    @Id @GeneratedValue var id: Long = -1,
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) var id: Long = -1,
     var userAccount: String,
     var userName: String,
     var userPassword: String,
