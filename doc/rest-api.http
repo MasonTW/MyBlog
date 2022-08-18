@@ -1,0 +1,16 @@
+
+
+###
+POST http://localhost:8080/register
+Content-Type: application/json
+
+{
+  "userName":"Mason",
+  "userAccount":"zhimaoyi",
+  "userPassword":"123456"
+}
+
+<> 2022-08-15T124710.200.json
+
+
+
