@@ -1,16 +1,18 @@
 package com.mx.blog.service
 
 import com.mx.blog.DTO.UserDTO
+import com.mx.blog.DTO.UserLoginDTO
 import com.mx.blog.DTO.UserRegisterDTO
 import com.mx.blog.entity.User
 import com.mx.blog.repository.UserRepository
+import com.mx.blog.utils.JWTUtils
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 import javax.servlet.http.HttpSession
 
 @Service
 class UserService(
-   private val userRepository: UserRepository
+    private val userRepository: UserRepository
 ) {
 
     fun findUserById(id: Long): UserDTO {
@@ -31,11 +33,16 @@ class UserService(
         return userRepository.save(newUser)
     }
 
-    fun login(userRegisterDTO: UserRegisterDTO, session: HttpSession): Boolean {
-        val findResult = userRepository.findByUserAccount(userAccount = userRegisterDTO.userAccount)
-        return if (findResult.userPassword == userRegisterDTO.userPassword) {
-            session.setAttribute("userId",findResult.id)
-            true
-        }else false
+    fun login(userLoginDTO: UserLoginDTO, session: HttpSession): Boolean {
+        val findResult = userRepository.findByUserAccountAndUserPassword(
+            userAccount = userLoginDTO.userAccount,
+            userPassword = userLoginDTO.userPassword
+        )
+        return if (findResult != null){
+            val user = UserDTO(userId = findResult.id, userName = findResult.userName)
+            val token = JWTUtils.getToken(user = user)
+            println(token)
+            return true
+        } else false
     }
 }

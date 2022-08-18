@@ -1,11 +1,11 @@
 package com.mx.blog.controller
 
 import com.mx.blog.DTO.UserDTO
+import com.mx.blog.DTO.UserLoginDTO
 import com.mx.blog.DTO.UserRegisterDTO
 import com.mx.blog.service.UserService
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
-import java.util.*
 import javax.servlet.http.HttpSession
 
 @Controller
@@ -22,8 +22,8 @@ class UserController(
 
     @PostMapping("/login")
     @ResponseBody
-    fun login(@RequestBody userRegisterDTO: UserRegisterDTO, session : HttpSession): Boolean{
-       return userService.login(userRegisterDTO, session)
+    fun login(@RequestBody userLoginDTO: UserLoginDTO, session : HttpSession): Boolean{
+       return userService.login(userLoginDTO, session)
     }
 
     @PostMapping("/register")

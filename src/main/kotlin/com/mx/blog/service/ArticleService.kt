@@ -5,7 +5,9 @@ import com.mx.blog.DTO.ArticleCreateDTO
 import com.mx.blog.entity.Article
 import com.mx.blog.repository.ArticleRepository
 import com.mx.blog.repository.UserRepository
+import com.mx.blog.utils.JWTUtils
 import org.springframework.stereotype.Service
+import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpSession
 
 @Service
@@ -13,13 +15,16 @@ class ArticleService(
     private val articleRepository: ArticleRepository,
     private val userRepository: UserRepository,
 ) {
-    fun createArticle(articleGetDTO: ArticleCreateDTO, session: HttpSession): Article {
+    fun createArticle(articleGetDTO: ArticleCreateDTO, request: HttpServletRequest): Article {
+        val token = request.getHeader("token")
+        val verify = JWTUtils.verify(token)
+
         val newArticle = Article(
             articleTitle = articleGetDTO.articleTitle,
             articleContent = articleGetDTO.articleContent,
             articleAddTime = System.currentTimeMillis().toString(),
             articleUpdateTime = System.currentTimeMillis().toString(),
-            articleUserId = session.getAttribute("userId") as Long,
+            articleUserId = verify.getClaim("userId").asLong(),
             comments = mutableListOf(),
             agreement = null
         )
