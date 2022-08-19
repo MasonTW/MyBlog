@@ -41,6 +41,7 @@ class UserService(
         return if (findResult != null){
             val user = UserDTO(userId = findResult.id, userName = findResult.userName)
             val token = JWTUtils.getToken(user = user)
+            session.setAttribute("userId",findResult.id)
             println(token)
             return true
         } else false

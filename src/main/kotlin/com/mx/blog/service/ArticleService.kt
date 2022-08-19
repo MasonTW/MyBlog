@@ -15,16 +15,13 @@ class ArticleService(
     private val articleRepository: ArticleRepository,
     private val userRepository: UserRepository,
 ) {
-    fun createArticle(articleGetDTO: ArticleCreateDTO, request: HttpServletRequest): Article {
-        val token = request.getHeader("token")
-        val verify = JWTUtils.verify(token)
-
+    fun createArticle(articleGetDTO: ArticleCreateDTO, userid: Long): Article {
         val newArticle = Article(
             articleTitle = articleGetDTO.articleTitle,
             articleContent = articleGetDTO.articleContent,
             articleAddTime = System.currentTimeMillis().toString(),
             articleUpdateTime = System.currentTimeMillis().toString(),
-            articleUserId = verify.getClaim("userId").asLong(),
+            articleUserId = userid,
             comments = mutableListOf(),
             agreement = null
         )

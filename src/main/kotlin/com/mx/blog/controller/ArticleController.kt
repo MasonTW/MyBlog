@@ -5,7 +5,6 @@ import com.mx.blog.DTO.ArticleCreateDTO
 import com.mx.blog.service.ArticleService
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
-import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpSession
 
 @Controller
@@ -14,8 +13,8 @@ class ArticleController(
 ){
     @PostMapping("/article")
     @ResponseBody
-    fun createArticle(@RequestBody articleCreateDTO: ArticleCreateDTO, request: HttpServletRequest) {
-        articleService.createArticle(articleCreateDTO, request)
+    fun createArticle(@RequestBody articleCreateDTO: ArticleCreateDTO,@RequestAttribute("userId") userId: Long) {
+        articleService.createArticle(articleCreateDTO, userId)
     }
 
     @PostMapping("/article/update")

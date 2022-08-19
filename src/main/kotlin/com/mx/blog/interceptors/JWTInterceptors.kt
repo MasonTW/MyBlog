@@ -14,7 +14,9 @@ class JWTInterceptors : HandlerInterceptor {
         val map = mutableMapOf<String, Any>()
         val token = request.getHeader("token")//获取请求头令牌
         try {
-            JWTUtils.verify(token)
+            val verify = JWTUtils.verify(token)
+            val userId = verify.getClaim("userId").asLong()
+            request.setAttribute("userId", userId)
             return true
         } catch (e: SignatureVerificationException) {
             e.printStackTrace()
