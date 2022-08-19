@@ -5,10 +5,7 @@ import com.mx.blog.DTO.ArticleCreateDTO
 import com.mx.blog.entity.Article
 import com.mx.blog.repository.ArticleRepository
 import com.mx.blog.repository.UserRepository
-import com.mx.blog.utils.JWTUtils
 import org.springframework.stereotype.Service
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpSession
 
 @Service
 class ArticleService(

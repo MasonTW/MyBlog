@@ -4,7 +4,6 @@ import com.mx.blog.entity.Agreement
 import com.mx.blog.service.AgreementService
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
-import javax.servlet.http.HttpSession
 
 @Controller
 class AgreementController(
@@ -13,22 +12,19 @@ class AgreementController(
 
     @PostMapping("/article/{articleId}/agreement")
     @ResponseBody
-    fun agreeArticle(@PathVariable articleId: Long, session: HttpSession): Agreement {
-        val userId = session.getAttribute("userId") as Long
+    fun agreeArticle(@PathVariable articleId: Long, @RequestAttribute("userId") userId: Long): Agreement {
         return agreementService.agreeArticle(articleId, userId)
     }
 
     @PostMapping("/article/{articleId}/agreement/cancel")
     @ResponseBody
-    fun cancelArticleAgreement(@PathVariable articleId: Long, session: HttpSession): Boolean {
-        val userId = session.getAttribute("userId") as Long
+    fun cancelArticleAgreement(@PathVariable articleId: Long, @RequestAttribute("userId") userId: Long): Boolean {
         return agreementService.cancelArticleAgreement(articleId, userId)
     }
 
     @GetMapping("/article/{articleId}/agreement")
     @ResponseBody
-    fun isArticleAgreed(@PathVariable articleId: Long, session: HttpSession): Boolean {
-        val userId = session.getAttribute("userId") as Long
+    fun isArticleAgreed(@PathVariable articleId: Long, @RequestAttribute("userId") userId: Long): Boolean {
         return agreementService.isAgreed(articleId, userId)
     }
 }

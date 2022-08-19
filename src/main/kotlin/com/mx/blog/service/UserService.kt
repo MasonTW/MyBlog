@@ -8,7 +8,6 @@ import com.mx.blog.repository.UserRepository
 import com.mx.blog.utils.JWTUtils
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
-import javax.servlet.http.HttpSession
 
 @Service
 class UserService(
@@ -33,7 +32,7 @@ class UserService(
         return userRepository.save(newUser)
     }
 
-    fun login(userLoginDTO: UserLoginDTO, session: HttpSession): Boolean {
+    fun login(userLoginDTO: UserLoginDTO): Boolean {
         val findResult = userRepository.findByUserAccountAndUserPassword(
             userAccount = userLoginDTO.userAccount,
             userPassword = userLoginDTO.userPassword
@@ -41,7 +40,6 @@ class UserService(
         return if (findResult != null){
             val user = UserDTO(userId = findResult.id, userName = findResult.userName)
             val token = JWTUtils.getToken(user = user)
-            session.setAttribute("userId",findResult.id)
             println(token)
             return true
         } else false

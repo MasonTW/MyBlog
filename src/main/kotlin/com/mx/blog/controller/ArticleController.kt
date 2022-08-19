@@ -5,7 +5,6 @@ import com.mx.blog.DTO.ArticleCreateDTO
 import com.mx.blog.service.ArticleService
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
-import javax.servlet.http.HttpSession
 
 @Controller
 class ArticleController(
@@ -25,9 +24,7 @@ class ArticleController(
 
     @PostMapping("/article/{articleId}")
     @ResponseBody
-//    @PreAuthorize("hasRole('ADMIN')")
-    fun deleteArticle(@PathVariable articleId: Long, session: HttpSession) {
-//        val authentication = SecurityContextHolder.getContext().authentication
+    fun deleteArticle(@PathVariable articleId: Long, @RequestAttribute("userId") userId: Long) {
         articleService.deleteArticle(articleId)
     }
 

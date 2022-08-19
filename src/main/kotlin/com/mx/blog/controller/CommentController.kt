@@ -5,7 +5,6 @@ import com.mx.blog.entity.Comment
 import com.mx.blog.service.CommentService
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
-import javax.servlet.http.HttpSession
 
 @Controller
 class CommentController(
@@ -13,8 +12,8 @@ class CommentController(
 ){
     @PostMapping("/article/{articleId}/comment")
     @ResponseBody
-    fun addComment(@RequestParam comment: String, @PathVariable articleId: Long, session: HttpSession): Comment  {
-         return commentService.addComment(comment, articleId, session)
+    fun addComment(@RequestParam comment: String, @PathVariable articleId: Long, @RequestAttribute("userId") userId: Long): Comment  {
+         return commentService.addComment(comment, articleId, userId)
     }
 
     @PostMapping("/comment/{commentId}")
