@@ -20,7 +20,9 @@ class ArticleService(
 
     fun getArticlesByUserName(userName: String): List<ArticleInfoDTO> {
         val userId = userRepository.findByUserName(userName).id
-        return articleRepository.findAllByArticleUserId(userId).map { Article.toArticleInfoDTO(it) }
+        return articleRepository.findAllByArticleUserId(userId)
+            .filter { !it.isDeleted  }
+            .map { Article.toArticleInfoDTO(it) }
     }
 
     fun deleteArticle(articleId: Long): Boolean {
@@ -35,7 +37,9 @@ class ArticleService(
     }
 
     fun getRandomTenArticles(): List<ArticleInfoDTO> {
-        return articleRepository.findRandomArticles().map { Article.toArticleInfoDTO(it) }
+        return articleRepository.findRandomArticles()
+            .filter { !it.isDeleted  }
+            .map { Article.toArticleInfoDTO(it) }
     }
 
     fun updateArticle(articleUpdateDTO: ArticleBasicDTO, articleId: Long): ArticleInfoDTO {

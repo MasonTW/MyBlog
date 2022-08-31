@@ -13,7 +13,8 @@ class User(
     var userPassword: String,
     var userRegisterTime: String,
     @OneToMany(targetEntity = Collection::class, cascade = [CascadeType.ALL], mappedBy = "userId")
-    var collections: List<Collection> = mutableListOf()
+    var collections: List<Collection> = mutableListOf(),
+    var isDeleted: Boolean = false,
 ) {
     companion object {
         fun toUserDTO(user: User): UserDTO {

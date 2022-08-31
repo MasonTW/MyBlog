@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository
 interface UserRepository: JpaRepository<User, Long> {
     fun findByUserName(userName: String): User
     fun findByUserAccountAndUserPassword(userAccount: String, userPassword: String ): User?
+    fun findByIdAndIsDeleted(userId: Long, isDeleted: Boolean): User?
 }

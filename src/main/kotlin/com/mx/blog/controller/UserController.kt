@@ -36,4 +36,12 @@ class UserController(
             userName = createUser.userName
         )
     }
+
+    @PostMapping("/user/{id}")
+    @ResponseBody
+    fun deleteUserByAdmin(@PathVariable id: String): Boolean{
+        val userId = id.toLong()
+        return userService.deleteUser(userId)
+
+    }
 }
