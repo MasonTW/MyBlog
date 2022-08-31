@@ -4,6 +4,7 @@ import com.mx.blog.DTO.UserDTO
 import com.mx.blog.DTO.UserLoginDTO
 import com.mx.blog.DTO.UserRegisterDTO
 import com.mx.blog.service.UserService
+import org.springframework.http.server.ServerHttpResponse
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 
@@ -17,6 +18,7 @@ class UserController(
     fun getUser(@PathVariable id: String): UserDTO{
         val userId = id.toLong()
         return userService.findUserById(userId)
+
     }
 
     @PostMapping("/login")
