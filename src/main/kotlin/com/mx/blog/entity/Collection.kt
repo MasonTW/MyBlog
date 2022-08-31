@@ -1,5 +1,7 @@
 package com.mx.blog.entity
 
+import com.mx.blog.DTO.CollectionCreateDTO
+import com.mx.blog.DTO.CollectionsDTO
 import javax.persistence.*
 
 @Entity
@@ -10,4 +12,18 @@ class Collection(
     var articleNum: Long = 0,
     @OneToMany(targetEntity = ArticleCollection::class, cascade = [CascadeType.ALL], mappedBy = "collectionId")
     var collectionArticles: List<ArticleCollection> = mutableListOf(),
-)
+){
+    companion object {
+        fun toCollection(collectionCreateDTO: CollectionCreateDTO): Collection {
+            return Collection(userId = collectionCreateDTO.userId, name = collectionCreateDTO.name)
+        }
+
+        fun toCollectionsDTO(collection: Collection): CollectionsDTO {
+            return CollectionsDTO(
+                collectionId = collection.collectionId,
+                name = collection.name,
+                articleNum = collection.collectionArticles.size.toLong()
+            )
+        }
+    }
+}

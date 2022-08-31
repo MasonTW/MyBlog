@@ -1,7 +1,7 @@
 package com.mx.blog.DTO
 
 
-data class ArticleCreateDTO(
+data class ArticleInfoDTO(
     var articleTitle: String,
     var articleContent: String,
     var articleStar: Int = 0,

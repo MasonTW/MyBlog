@@ -16,19 +16,11 @@ class UserService(
 
     fun findUserById(id: Long): UserDTO {
         val user = userRepository.findById(id).get()
-        return UserDTO(
-            userId = user.id,
-            userName = user.userName
-        )
+        return User.toUserDTO(user)
     }
 
     fun createUser(userRegisterDTO: UserRegisterDTO): User {
-        val newUser = User(
-            userName = userRegisterDTO.userName,
-            userPassword = userRegisterDTO.userPassword,
-            userRegisterTime = LocalDateTime.now().toString(),
-            userAccount = userRegisterDTO.userAccount,
-        )
+        val newUser = User.toUser(userRegisterDTO)
         return userRepository.save(newUser)
     }
 

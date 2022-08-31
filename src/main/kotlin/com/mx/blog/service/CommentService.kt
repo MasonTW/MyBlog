@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class CommentService(
-   private val commentRepository: CommentRepository,
+    private val commentRepository: CommentRepository,
 ) {
     fun addComment(comment: String, articleId: Long, userId: Long): Comment {
         val newComment = Comment(
@@ -16,19 +16,22 @@ class CommentService(
             commentContent = comment,
             userId = userId
         )
-       return  commentRepository.save(newComment)
+        return commentRepository.save(newComment)
     }
 
-    fun deleteComment(commentId: Long) {
-        return commentRepository.deleteById(commentId)
+    fun deleteComment(commentId: Long): Boolean {
+        return try {
+            commentRepository.deleteById(commentId)
+            return true
+        } catch (e: Exception) {
+            return false
+        }
     }
 
     fun getArticleComments(articleId: Long): List<CommentDTO> {
-        return commentRepository.findAllByArticleId(articleId).map { commentDTOMapper(it) }
+        return commentRepository.findAllByArticleId(articleId).map { Comment.toCommentDTO(it) }
     }
 
-    private fun commentDTOMapper(comment: Comment): CommentDTO{
-        return CommentDTO(userId = comment.userId, commentStar = comment.commentStar, commentContent = comment.commentContent)
-    }
+
 
 }

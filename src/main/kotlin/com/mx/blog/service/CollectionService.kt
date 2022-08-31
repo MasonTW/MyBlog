@@ -1,8 +1,9 @@
 package com.mx.blog.service
 
-import com.mx.blog.DTO.ArticleCreateDTO
+import com.mx.blog.DTO.ArticleInfoDTO
 import com.mx.blog.DTO.CollectionCreateDTO
 import com.mx.blog.DTO.CollectionsDTO
+import com.mx.blog.entity.Article
 import com.mx.blog.entity.ArticleCollection
 import com.mx.blog.entity.Collection
 import com.mx.blog.repository.ArticleCollectionRepository
@@ -15,45 +16,41 @@ class CollectionService(
     private val collectionRepository: CollectionRepository,
     private val articleCollectionRepository: ArticleCollectionRepository,
     private val articleRepository: ArticleRepository,
-    private val articleService: ArticleService,
 ) {
     fun getCollections(userId: Long): List<CollectionsDTO> {
-        return collectionRepository.findAllByUserId(userId).map { collectionMapper(it) }
+        return collectionRepository.findAllByUserId(userId).map { Collection.toCollectionsDTO(it) }
     }
 
     fun createCollection(collectionCreateDTO: CollectionCreateDTO): Collection {
-        val collection = collectionMapper(collectionCreateDTO)
+        val collection = Collection.toCollection(collectionCreateDTO)
         return collectionRepository.save(collection)
     }
 
-    fun addArticle(articleId: Long, collectionId: Long) {
+    fun addArticle(articleId: Long, collectionId: Long): Boolean {
         val articleCollection = ArticleCollection(articleId = articleId, collectionId = collectionId)
         var collection = collectionRepository.findById(collectionId).get()
         collection.articleNum++
-        articleCollectionRepository.save(articleCollection)
-        collectionRepository.save(collection)
+        return try {
+            articleCollectionRepository.save(articleCollection)
+            collectionRepository.save(collection)
+            true
+        } catch (e: Exception) {
+            false
+        }
     }
 
-    fun getArticles(collectionId: Long): List<ArticleCreateDTO> {
+    fun getArticles(collectionId: Long): List<ArticleInfoDTO> {
         val articleCollections = articleCollectionRepository.findAllByCollectionId(collectionId)
         return if (articleCollections.isEmpty()) {
             emptyList()
         } else {
-            articleCollections.map { articleRepository.findById(it.articleId) }.filter { it.isPresent }
-                .map { articleService.articleMapper(it.get()) }
+            articleCollections
+                .map { articleRepository.findById(it.articleId) }
+                .filter { it.isPresent }
+                .map { Article.toArticleInfoDTO(it.get()) }
         }
 
     }
 
-    private fun collectionMapper(collectionCreateDTO: CollectionCreateDTO): Collection {
-        return Collection(userId = collectionCreateDTO.userId, name = collectionCreateDTO.name)
-    }
 
-    private fun collectionMapper(collection: Collection): CollectionsDTO {
-        return CollectionsDTO(
-            collectionId = collection.collectionId,
-            name = collection.name,
-            articleNum = collection.collectionArticles.size.toLong()
-        )
-    }
 }

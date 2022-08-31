@@ -1,7 +1,7 @@
 package com.mx.blog.service
 
 import com.mx.blog.DTO.ArticleBasicDTO
-import com.mx.blog.DTO.ArticleCreateDTO
+import com.mx.blog.DTO.ArticleInfoDTO
 import com.mx.blog.entity.Article
 import com.mx.blog.repository.ArticleRepository
 import com.mx.blog.repository.UserRepository
@@ -12,51 +12,39 @@ class ArticleService(
     private val articleRepository: ArticleRepository,
     private val userRepository: UserRepository,
 ) {
-    fun createArticle(articleGetDTO: ArticleCreateDTO, userid: Long): Article {
-        val newArticle = Article(
-            articleTitle = articleGetDTO.articleTitle,
-            articleContent = articleGetDTO.articleContent,
-            articleAddTime = System.currentTimeMillis().toString(),
-            articleUpdateTime = System.currentTimeMillis().toString(),
-            articleUserId = userid,
-            comments = mutableListOf(),
-            agreement = null
-        )
-        return articleRepository.save(newArticle)
+    fun createArticle(articleBasicDTO: ArticleBasicDTO, userid: Long): ArticleInfoDTO {
+        val newArticle = Article.toArticle(articleBasicDTO, userid)
+        val saveResult = articleRepository.save(newArticle)
+        return Article.toArticleInfoDTO(saveResult)
     }
 
-    fun getArticlesByUserName(userName: String): List<ArticleCreateDTO> {
+    fun getArticlesByUserName(userName: String): List<ArticleInfoDTO> {
         val userId = userRepository.findByUserName(userName).id
-        return articleRepository.findAllByArticleUserId(userId).map { articleMapper(it) }
+        return articleRepository.findAllByArticleUserId(userId).map { Article.toArticleInfoDTO(it) }
     }
 
-    fun articleMapper(article: Article): ArticleCreateDTO {
-        val agreement = article.agreement
-        return ArticleCreateDTO(
-            articleTitle = article.articleTitle,
-            articleContent = article.articleContent,
-            articleStar = article.articleStar,
-            articleCollectionNum = article.articleCollectionNum,
-            articleLookTimes = article.articleLookTimes,
-            commentsNum = article.comments.size.toLong(),
-            agreementNum = agreement?.agreementNum ?: 0
-        )
+    fun deleteArticle(articleId: Long): Boolean {
+        return try {
+            val articleEntity = articleRepository.findById(articleId).get()
+            articleEntity.isDeleted = true
+            articleRepository.saveAndFlush(articleEntity)
+            true
+        } catch (e: Exception) {
+            false
+        }
     }
 
-    fun deleteArticle(articleId: Long) {
-        articleRepository.deleteById(articleId)
+    fun getRandomTenArticles(): List<ArticleInfoDTO> {
+        return articleRepository.findRandomArticles().map { Article.toArticleInfoDTO(it) }
     }
 
-    fun getRandomTenArticles(): List<ArticleCreateDTO> {
-        return articleRepository.findRandomArticles().map { articleMapper(it) }
-    }
-
-    fun updateArticle(articleUpdateDTO: ArticleBasicDTO, articleId: Long) {
+    fun updateArticle(articleUpdateDTO: ArticleBasicDTO, articleId: Long): ArticleInfoDTO {
         val article = articleRepository.findById(articleId).get()
         article.articleTitle = articleUpdateDTO.articleTitle
         article.articleContent = articleUpdateDTO.articleContent
         article.articleUpdateTime = System.currentTimeMillis().toString()
-        articleRepository.save(article)
+        val saveResult = articleRepository.save(article)
+        return Article.toArticleInfoDTO(saveResult)
     }
 
 }

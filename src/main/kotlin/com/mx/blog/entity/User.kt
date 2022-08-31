@@ -1,5 +1,8 @@
 package com.mx.blog.entity
 
+import com.mx.blog.DTO.UserDTO
+import com.mx.blog.DTO.UserRegisterDTO
+import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
@@ -11,4 +14,22 @@ class User(
     var userRegisterTime: String,
     @OneToMany(targetEntity = Collection::class, cascade = [CascadeType.ALL], mappedBy = "userId")
     var collections: List<Collection> = mutableListOf()
-    )
+) {
+    companion object {
+        fun toUserDTO(user: User): UserDTO {
+            return UserDTO(
+                userId = user.id,
+                userName = user.userName
+            )
+        }
+
+        fun toUser(userRegisterDTO: UserRegisterDTO): User {
+           return User(
+               userName = userRegisterDTO.userName,
+               userPassword = userRegisterDTO.userPassword,
+               userRegisterTime = LocalDateTime.now().toString(),
+               userAccount = userRegisterDTO.userAccount,
+           )
+        }
+    }
+}
