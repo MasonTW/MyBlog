@@ -1,6 +1,6 @@
 package com.mx.blog.controller
 
-import com.mx.blog.DTO.ArticleCreateDTO
+import com.mx.blog.DTO.ArticleInfoDTO
 import com.mx.blog.DTO.CollectionCreateDTO
 import com.mx.blog.DTO.CollectionsDTO
 import com.mx.blog.entity.Collection
@@ -26,13 +26,13 @@ class CollectionController(
 
     @PostMapping("/user/collections/article/{articleId}")
     @ResponseBody
-    fun addArticleToCollection(@PathVariable articleId: Long,@RequestParam collectionId: Long) {
+    fun addArticleToCollection(@PathVariable articleId: Long,@RequestParam collectionId: Long): Boolean {
         return collectionService.addArticle(articleId, collectionId)
     }
 
     @GetMapping("/user/collections/{collectionId}")
     @ResponseBody
-    fun getCollectionArticles(@PathVariable collectionId: Long): List<ArticleCreateDTO> {
+    fun getCollectionArticles(@PathVariable collectionId: Long): List<ArticleInfoDTO> {
         return collectionService.getArticles(collectionId)
     }
 }

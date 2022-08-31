@@ -18,8 +18,8 @@ class CommentController(
 
     @PostMapping("/comment/{commentId}")
     @ResponseBody
-    fun deleteComment(@PathVariable commentId: Long) {
-        commentService.deleteComment(commentId)
+    fun deleteComment(@PathVariable commentId: Long): Boolean {
+        return commentService.deleteComment(commentId)
     }
 
     @PostMapping("/article/comments/{articleId}")
