@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service
 class ArticleService(
     private val articleRepository: ArticleRepository,
     private val userRepository: UserRepository,
+    private val agreementService: AgreementService,
 ) {
     fun createArticle(articleBasicDTO: ArticleBasicDTO, userid: Long): ArticleInfoDTO {
         val newArticle = Article.toArticle(articleBasicDTO, userid)
@@ -51,4 +52,18 @@ class ArticleService(
         return Article.toArticleInfoDTO(saveResult)
     }
 
+    fun getArticlesById(articleId: Long, userId: Long? = null): ArticleInfoDTO {
+        val article = articleRepository.findById(articleId).get()
+        val isAuthor = checkArticleRelationship(articleId, userId)
+        val isAgreed = checkAgreement(articleId, userId)
+        return Article.toArticleInfoDTO(article, isAuthor, isAgreed)
+    }
+
+    private fun checkAgreement(articleId: Long, userId: Long?): Boolean {
+        return userId?.let {
+            agreementService.isAgreed(articleId, userId)
+        } ?: false
+    }
+
+    private fun checkArticleRelationship(articleId: Long, userId: Long?) = userId == articleId
 }

@@ -30,6 +30,12 @@ class ArticleController(
         return articleService.deleteArticle(articleId)
     }
 
+    @GetMapping("/articles/{articleId}")
+    @ResponseBody
+    fun getArticle(@PathVariable articleId: Long, @RequestAttribute("userId") userId: Long): ArticleInfoDTO {
+        return articleService.getArticlesById(articleId, userId)
+    }
+
     @GetMapping("/articles/{userName}")
     @ResponseBody
     fun getArticlesByUserName(@PathVariable userName: String): List<ArticleInfoDTO> {
