@@ -12,31 +12,31 @@ import org.springframework.web.bind.annotation.*
 class ArticleController(
     private val articleService: ArticleService,
 ){
-    @PostMapping("/article")
+    @PostMapping("/articles")
     @ResponseBody
     fun createArticle(@RequestBody articleBasicDTO: ArticleBasicDTO, @RequestAttribute("userId") userId: Long): ArticleInfoDTO {
-       return articleService.createArticle(articleBasicDTO, userId)
+        return articleService.createArticle(articleBasicDTO, userId)
     }
 
-    @PostMapping("/article/update")
+    @PutMapping("/articles/{articleId}")
     @ResponseBody
-    fun updateArticle(@RequestBody articleUpdateDTO: ArticleBasicDTO, articleId: Long): ArticleInfoDTO {
+    fun updateArticle(@RequestBody articleUpdateDTO: ArticleBasicDTO, @PathVariable articleId: Long): ArticleInfoDTO {
         return articleService.updateArticle(articleUpdateDTO, articleId)
     }
 
-    @PostMapping("/article/{articleId}")
+    @DeleteMapping("/articles/{articleId}")
     @ResponseBody
     fun deleteArticle(@PathVariable articleId: Long, @RequestAttribute("userId") userId: Long): Boolean {
         return articleService.deleteArticle(articleId)
     }
 
-    @GetMapping("/article/{userName}")
+    @GetMapping("/articles/{userName}")
     @ResponseBody
     fun getArticlesByUserName(@PathVariable userName: String): List<ArticleInfoDTO> {
        return articleService.getArticlesByUserName(userName)
     }
 
-    @GetMapping("/article/random")
+    @GetMapping("/articles/random-articles")
     @ResponseBody
     fun getRandomTenArticles(): ResponseResult {
         val articles = articleService.getRandomTenArticles()

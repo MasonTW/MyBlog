@@ -10,19 +10,19 @@ class AgreementController(
     private val agreementService: AgreementService,
 ){
 
-    @PostMapping("/article/{articleId}/agreement")
+    @PostMapping("/articles/{articleId}/agreements")
     @ResponseBody
     fun agreeArticle(@PathVariable articleId: Long, @RequestAttribute("userId") userId: Long): Agreement {
         return agreementService.agreeArticle(articleId, userId)
     }
 
-    @PostMapping("/article/{articleId}/agreement/cancel")
+    @PostMapping("/articles/{articleId}/agreements/cancel")
     @ResponseBody
     fun cancelArticleAgreement(@PathVariable articleId: Long, @RequestAttribute("userId") userId: Long): Boolean {
         return agreementService.cancelArticleAgreement(articleId, userId)
     }
 
-    @GetMapping("/article/{articleId}/agreement")
+    @GetMapping("/articles/{articleId}/agreements")
     @ResponseBody
     fun isArticleAgreed(@PathVariable articleId: Long, @RequestAttribute("userId") userId: Long): Boolean {
         return agreementService.isAgreed(articleId, userId)

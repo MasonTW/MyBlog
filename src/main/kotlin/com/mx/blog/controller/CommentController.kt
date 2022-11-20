@@ -10,19 +10,19 @@ import org.springframework.web.bind.annotation.*
 class CommentController(
     private val commentService: CommentService,
 ){
-    @PostMapping("/article/{articleId}/comment")
+    @PostMapping("/articles/{articleId}/comments")
     @ResponseBody
     fun addComment(@RequestParam comment: String, @PathVariable articleId: Long, @RequestAttribute("userId") userId: Long): Comment  {
          return commentService.addComment(comment, articleId, userId)
     }
 
-    @PostMapping("/comment/{commentId}")
+    @PostMapping("/comments/{commentId}")
     @ResponseBody
     fun deleteComment(@PathVariable commentId: Long): Boolean {
         return commentService.deleteComment(commentId)
     }
 
-    @PostMapping("/article/comments/{articleId}")
+    @PostMapping("/articles/comments/{articleId}")
     fun getArticleComments(@PathVariable articleId: Long): List<CommentDTO> {
         return commentService.getArticleComments(articleId)
     }

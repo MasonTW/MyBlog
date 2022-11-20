@@ -13,7 +13,7 @@ class UserController(
     private val userService: UserService
 ){
 
-    @GetMapping("/user/{id}")
+    @GetMapping("/users/{id}")
     @ResponseBody
     fun getUser(@PathVariable id: String): UserDTO{
         val userId = id.toLong()
@@ -37,7 +37,7 @@ class UserController(
         )
     }
 
-    @PostMapping("/user/{id}")
+    @PostMapping("/users/{id}")
     @ResponseBody
     fun deleteUserByAdmin(@PathVariable id: String): Boolean{
         val userId = id.toLong()

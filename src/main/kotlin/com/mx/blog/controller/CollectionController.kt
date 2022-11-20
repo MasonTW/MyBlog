@@ -12,25 +12,25 @@ import org.springframework.web.bind.annotation.*
 class CollectionController(
     private val collectionService: CollectionService,
 ) {
-    @GetMapping("/user/collections")
+    @GetMapping("/users/collections")
     @ResponseBody
     fun getCollection(@RequestParam userId: Long): List<CollectionsDTO> {
         return collectionService.getCollections(userId)
     }
 
-    @PostMapping("/user/collections")
+    @PostMapping("/users/collections")
     @ResponseBody
     fun createCollection (@RequestBody collectionCreateDTO: CollectionCreateDTO): Collection {
        return collectionService.createCollection(collectionCreateDTO)
     }
 
-    @PostMapping("/user/collections/article/{articleId}")
+    @PostMapping("/users/collections/articles/{articleId}")
     @ResponseBody
     fun addArticleToCollection(@PathVariable articleId: Long,@RequestParam collectionId: Long): Boolean {
         return collectionService.addArticle(articleId, collectionId)
     }
 
-    @GetMapping("/user/collections/{collectionId}")
+    @GetMapping("/users/collections/{collectionId}")
     @ResponseBody
     fun getCollectionArticles(@PathVariable collectionId: Long): List<ArticleInfoDTO> {
         return collectionService.getArticles(collectionId)
