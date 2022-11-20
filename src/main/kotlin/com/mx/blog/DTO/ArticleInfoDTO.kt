@@ -9,4 +9,10 @@ data class ArticleInfoDTO(
     var articleCollectionNum: Int = 0,
     val commentsNum: Long,
     val agreementNum: Long,
-)
+    val relationship: Relationship
+) {
+    data class Relationship(
+     var isAgreeing: Boolean,
+     val is_author: Boolean
+    )
+}

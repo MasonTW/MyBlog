@@ -22,7 +22,7 @@ class Article(
     var comments: MutableList<Comment>,
 ) {
     companion object{
-        fun toArticleInfoDTO(article: Article): ArticleInfoDTO {
+        fun toArticleInfoDTO(article: Article, isAuthor: Boolean = false, isAgreed: Boolean = false): ArticleInfoDTO {
             val agreement = article.agreement
             return ArticleInfoDTO(
                 articleTitle = article.articleTitle,
@@ -31,7 +31,8 @@ class Article(
                 articleCollectionNum = article.articleCollectionNum,
                 articleLookTimes = article.articleLookTimes,
                 commentsNum = article.comments.size.toLong(),
-                agreementNum = agreement?.agreementNum ?: 0
+                agreementNum = agreement?.agreementNum ?: 0,
+                relationship = ArticleInfoDTO.Relationship(isAuthor, isAgreed)
             )
         }
 
