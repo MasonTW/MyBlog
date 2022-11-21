@@ -1,7 +1,5 @@
 package com.mx.blog.interceptors
 
-import com.auth0.jwt.exceptions.AlgorithmMismatchException
-import com.auth0.jwt.exceptions.SignatureVerificationException
 import com.auth0.jwt.exceptions.TokenExpiredException
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.mx.blog.utils.JWTUtils
@@ -12,29 +10,28 @@ import javax.servlet.http.HttpServletResponse
 class JWTInterceptors : HandlerInterceptor {
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
         val map = mutableMapOf<String, Any>()
-        val token = request.getHeader("token")//获取请求头令牌
-        try {
-            val verify = JWTUtils.verify(token)
-            val userId = verify.getClaim("userId").asLong()
-            request.setAttribute("userId", userId)
-            return true
-        } catch (e: SignatureVerificationException) {
+        return try {
+            val token = request.getHeader("token")//获取请求头令牌
+            checkToken(token, request)
+            true
+        } catch (e: Exception){
+            if (e.javaClass == TokenExpiredException::class.java) {
+                map["msg"] = "token过期"
+            }
             e.printStackTrace()
-            map["msg"] = "无效签名"
-            println("无效签名")
-        } catch (e: TokenExpiredException) {
-            e.printStackTrace()
-            map["msg"] = "token过期"
-        } catch (e: AlgorithmMismatchException) {
-            e.printStackTrace()
-            map["msg"] = "算法不一致"
-        } catch (e: Exception) {
-            e.printStackTrace()
-            map["msg"] = "token无效"
+            map["msg"] = "token异常"
+            response.status = HttpServletResponse.SC_UNAUTHORIZED
+            val json = ObjectMapper().writeValueAsString(map)
+            response.contentType = "application/json;charset=UTF-8"
+            response.writer.println(json)
+            false
         }
-        val json = ObjectMapper().writeValueAsString(map)
-        response.contentType = "application/json;charset=UTF-8"
-        response.writer.println(json)
-        return false
+    }
+
+    private fun checkToken(token: String, request: HttpServletRequest): Boolean {
+        val verify = JWTUtils.verify(token)
+        val userId = verify.getClaim("userId").asLong()
+        request.setAttribute("userId", userId)
+        return true
     }
 }
