@@ -2,7 +2,6 @@ package com.mx.blog.controller
 
 import com.mx.blog.DTO.UserLoginDTO
 import com.mx.blog.service.UserService
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
