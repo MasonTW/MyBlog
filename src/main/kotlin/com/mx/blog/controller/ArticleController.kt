@@ -36,9 +36,9 @@ class ArticleController(
         return articleService.getArticlesById(articleId, userId)
     }
 
-    @GetMapping("/articles/{userName}")
+    @GetMapping("/articles")
     @ResponseBody
-    fun getArticlesByUserName(@PathVariable userName: String): List<ArticleInfoDTO> {
+    fun getArticlesByUserName(@RequestParam("userName") userName: String): List<ArticleInfoDTO> {
        return articleService.getArticlesByUserName(userName)
     }
 

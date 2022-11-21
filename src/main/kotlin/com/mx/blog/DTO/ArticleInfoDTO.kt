@@ -13,6 +13,6 @@ data class ArticleInfoDTO(
 ) {
     data class Relationship(
      var isAgreeing: Boolean,
-     val is_author: Boolean
+     val isAuthor: Boolean
     )
 }

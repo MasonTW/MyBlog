@@ -3,6 +3,7 @@ package com.mx.blog.service
 import com.mx.blog.DTO.ArticleBasicDTO
 import com.mx.blog.DTO.ArticleInfoDTO
 import com.mx.blog.entity.Article
+import com.mx.blog.exception.ArticleIsNotExistedException
 import com.mx.blog.repository.ArticleRepository
 import com.mx.blog.repository.UserRepository
 import org.springframework.stereotype.Service
@@ -16,13 +17,13 @@ class ArticleService(
     fun createArticle(articleBasicDTO: ArticleBasicDTO, userid: Long): ArticleInfoDTO {
         val newArticle = Article.toArticle(articleBasicDTO, userid)
         val saveResult = articleRepository.save(newArticle)
-        return Article.toArticleInfoDTO(saveResult)
+        return Article.toArticleInfoDTO(article = saveResult, isAuthor = true, isAgreed = false)
     }
 
     fun getArticlesByUserName(userName: String): List<ArticleInfoDTO> {
         val userId = userRepository.findByUserName(userName).id
         return articleRepository.findAllByArticleUserId(userId)
-            .filter { !it.isDeleted  }
+            .filter { !it.isDeleted }
             .map { Article.toArticleInfoDTO(it) }
     }
 
@@ -39,7 +40,7 @@ class ArticleService(
 
     fun getRandomTenArticles(): List<ArticleInfoDTO> {
         return articleRepository.findRandomArticles()
-            .filter { !it.isDeleted  }
+            .filter { !it.isDeleted }
             .map { Article.toArticleInfoDTO(it) }
     }
 
@@ -54,6 +55,10 @@ class ArticleService(
 
     fun getArticlesById(articleId: Long, userId: Long? = null): ArticleInfoDTO {
         val article = articleRepository.findById(articleId).get()
+        if (article.isDeleted) {
+            throw ArticleIsNotExistedException("Article has been deleted")
+        }
+
         val isAuthor = checkArticleRelationship(articleId, userId)
         val isAgreed = checkAgreement(articleId, userId)
         return Article.toArticleInfoDTO(article, isAuthor, isAgreed)
