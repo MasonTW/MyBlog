@@ -1,5 +1,4 @@
-package com.mx.blog.DTO
-
+package com.mx.blog.DTO.article
 
 data class ArticleInfoDTO(
     var articleTitle: String,

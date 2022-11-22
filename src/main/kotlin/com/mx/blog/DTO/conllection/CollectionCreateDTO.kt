@@ -1,4 +1,4 @@
-package com.mx.blog.DTO
+package com.mx.blog.DTO.conllection
 
 data class CollectionCreateDTO(
     var userId: Long,

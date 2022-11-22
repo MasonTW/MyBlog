@@ -1,4 +1,4 @@
-package com.mx.blog.DTO
+package com.mx.blog.DTO.User
 
 data class UserRegisterDTO(
     val userName: String,
