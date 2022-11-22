@@ -1,9 +1,8 @@
 package com.mx.blog.controller
 
+
 import com.mx.blog.DTO.article.ArticleBasicDTO
 import com.mx.blog.DTO.article.ArticleInfoDTO
-import com.mx.blog.reseponse.ResponseCode
-import com.mx.blog.reseponse.ResponseResult
 import com.mx.blog.service.ArticleService
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
@@ -44,8 +43,7 @@ class ArticleController(
 
     @GetMapping("/articles/random-articles")
     @ResponseBody
-    fun getRandomTenArticles(): ResponseResult {
-        val articles = articleService.getRandomTenArticles()
-        return ResponseResult(ResponseCode.SUCCESS, articles)
+    fun getRandomTenArticles(): List<ArticleInfoDTO>  {
+        return articleService.getRandomTenArticles()
     }
 }
