@@ -9,5 +9,5 @@ class AgreementHistory(
     val articleId: Long,
     var agreementUserId: Long,
     var agreementTime: String,
-    var isDeleted: Boolean = false,
+    var deleted: Boolean = false,
 )

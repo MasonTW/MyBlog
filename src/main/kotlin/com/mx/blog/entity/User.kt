@@ -14,7 +14,7 @@ class User(
     var userRegisterTime: String,
     @OneToMany(targetEntity = Collection::class, cascade = [CascadeType.ALL], mappedBy = "userId")
     var collections: List<Collection> = mutableListOf(),
-    var isDeleted: Boolean = false,
+    var deleted: Boolean = false,
 ) {
     companion object {
         fun toUserDTO(user: User): UserDTO {

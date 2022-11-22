@@ -23,14 +23,14 @@ class ArticleService(
     fun getArticlesByUserName(userName: String): List<ArticleInfoDTO> {
         val userId = userRepository.findByUserName(userName).id
         return articleRepository.findAllByArticleUserId(userId)
-            .filter { !it.isDeleted }
+            .filter { !it.deleted }
             .map { Article.toArticleInfoDTO(it) }
     }
 
     fun deleteArticle(articleId: Long): Boolean {
         return try {
             val articleEntity = articleRepository.findById(articleId).get()
-            articleEntity.isDeleted = true
+            articleEntity.deleted = true
             articleRepository.saveAndFlush(articleEntity)
             true
         } catch (e: Exception) {
@@ -40,7 +40,7 @@ class ArticleService(
 
     fun getRandomTenArticles(): List<ArticleInfoDTO> {
         return articleRepository.findRandomArticles()
-            .filter { !it.isDeleted }
+            .filter { !it.deleted }
             .map { Article.toArticleInfoDTO(it) }
     }
 
@@ -55,7 +55,7 @@ class ArticleService(
 
     fun getArticlesById(articleId: Long, userId: Long? = null): ArticleInfoDTO {
         val article = articleRepository.findById(articleId).get()
-        if (article.isDeleted) {
+        if (article.deleted) {
             throw ArticleIsNotExistedException("Article has been deleted")
         }
 

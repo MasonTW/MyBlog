@@ -39,10 +39,10 @@ class UserService(
     fun deleteUser(userId: Long): Boolean {
         //todo verify permission
         val user = userRepository.findById(userId).get()
-        return if (user == null || user.isDeleted) {
+        return if (user == null || user.deleted) {
             false
         }else {
-            user.isDeleted = true
+            user.deleted = true
             userRepository.saveAndFlush(user)
             true
         }
