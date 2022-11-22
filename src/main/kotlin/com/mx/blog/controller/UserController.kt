@@ -1,10 +1,9 @@
 package com.mx.blog.controller
 
-import com.mx.blog.DTO.UserDTO
-import com.mx.blog.DTO.UserLoginDTO
-import com.mx.blog.DTO.UserRegisterDTO
+import com.mx.blog.DTO.User.UserDTO
+import com.mx.blog.DTO.User.UserLoginDTO
+import com.mx.blog.DTO.User.UserRegisterDTO
 import com.mx.blog.service.UserService
-import org.springframework.http.server.ServerHttpResponse
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 
@@ -15,7 +14,7 @@ class UserController(
 
     @GetMapping("/users/{id}")
     @ResponseBody
-    fun getUser(@PathVariable id: String): UserDTO{
+    fun getUser(@PathVariable id: String): UserDTO {
         val userId = id.toLong()
         return userService.findUserById(userId)
 
@@ -29,7 +28,7 @@ class UserController(
 
     @PostMapping("/register")
     @ResponseBody
-    fun createUser(@RequestBody userRegisterDTO: UserRegisterDTO): UserDTO{
+    fun createUser(@RequestBody userRegisterDTO: UserRegisterDTO): UserDTO {
         val createUser = userService.createUser(userRegisterDTO)
         return UserDTO(
             userId = createUser.id,
@@ -37,11 +36,4 @@ class UserController(
         )
     }
 
-    @PostMapping("/users/{id}")
-    @ResponseBody
-    fun deleteUserByAdmin(@PathVariable id: String): Boolean{
-        val userId = id.toLong()
-        return userService.deleteUser(userId)
-
-    }
 }

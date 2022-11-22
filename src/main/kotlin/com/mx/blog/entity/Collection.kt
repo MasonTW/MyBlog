@@ -1,7 +1,7 @@
 package com.mx.blog.entity
 
-import com.mx.blog.DTO.CollectionCreateDTO
-import com.mx.blog.DTO.CollectionsDTO
+import com.mx.blog.DTO.conllection.CollectionCreateDTO
+import com.mx.blog.DTO.conllection.CollectionsDTO
 import javax.persistence.*
 
 @Entity

@@ -6,7 +6,7 @@ import javax.persistence.*
 @Table(indexes = [Index(name = "index_tb_agreementUserId", columnList = "agreementUserId")])
 class AgreementHistory(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) var id: Long = -1,
-    var articleId: Long,
+    val articleId: Long,
     var agreementUserId: Long,
     var agreementTime: String,
     var isDeleted: Boolean = false,

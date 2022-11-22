@@ -1,9 +1,9 @@
 package com.mx.blog.controller
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.mx.blog.DTO.ArticleBasicDTO
-import com.mx.blog.DTO.ArticleInfoDTO
-import com.mx.blog.DTO.UserDTO
+import com.mx.blog.DTO.article.ArticleBasicDTO
+import com.mx.blog.DTO.article.ArticleInfoDTO
+import com.mx.blog.DTO.User.UserDTO
 import com.mx.blog.service.ArticleService
 import com.mx.blog.utils.JWTUtils
 import org.junit.jupiter.api.BeforeEach

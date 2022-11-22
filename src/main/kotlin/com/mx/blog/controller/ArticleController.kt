@@ -1,7 +1,7 @@
 package com.mx.blog.controller
 
-import com.mx.blog.DTO.ArticleBasicDTO
-import com.mx.blog.DTO.ArticleInfoDTO
+import com.mx.blog.DTO.article.ArticleBasicDTO
+import com.mx.blog.DTO.article.ArticleInfoDTO
 import com.mx.blog.reseponse.ResponseCode
 import com.mx.blog.reseponse.ResponseResult
 import com.mx.blog.service.ArticleService

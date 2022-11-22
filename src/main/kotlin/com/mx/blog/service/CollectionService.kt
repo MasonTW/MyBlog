@@ -1,8 +1,8 @@
 package com.mx.blog.service
 
-import com.mx.blog.DTO.ArticleInfoDTO
-import com.mx.blog.DTO.CollectionCreateDTO
-import com.mx.blog.DTO.CollectionsDTO
+import com.mx.blog.DTO.article.ArticleInfoDTO
+import com.mx.blog.DTO.conllection.CollectionCreateDTO
+import com.mx.blog.DTO.conllection.CollectionsDTO
 import com.mx.blog.entity.Article
 import com.mx.blog.entity.ArticleCollection
 import com.mx.blog.entity.Collection

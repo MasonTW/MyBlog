@@ -1,13 +1,11 @@
 package com.mx.blog.service
 
-import com.mx.blog.DTO.UserRegisterDTO
-import com.mx.blog.entity.Article
+import com.mx.blog.DTO.User.UserRegisterDTO
 import com.mx.blog.entity.User
 import com.mx.blog.repository.UserRepository
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.mockito.ArgumentMatchers.any
-import org.mockito.ArgumentMatchers.refEq
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
 

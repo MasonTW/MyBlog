@@ -3,9 +3,7 @@ package com.mx.blog.utils
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import com.auth0.jwt.interfaces.DecodedJWT
-import com.mx.blog.DTO.UserDTO
-import com.mx.blog.DTO.UserLoginDTO
-import com.mx.blog.entity.User
+import com.mx.blog.DTO.User.UserDTO
 import java.util.*
 
 class JWTUtils {

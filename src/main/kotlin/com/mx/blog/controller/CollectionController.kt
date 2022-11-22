@@ -1,8 +1,8 @@
 package com.mx.blog.controller
 
-import com.mx.blog.DTO.ArticleInfoDTO
-import com.mx.blog.DTO.CollectionCreateDTO
-import com.mx.blog.DTO.CollectionsDTO
+import com.mx.blog.DTO.article.ArticleInfoDTO
+import com.mx.blog.DTO.conllection.CollectionCreateDTO
+import com.mx.blog.DTO.conllection.CollectionsDTO
 import com.mx.blog.entity.Collection
 import com.mx.blog.service.CollectionService
 import org.springframework.stereotype.Controller

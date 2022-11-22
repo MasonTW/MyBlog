@@ -1,7 +1,7 @@
 package com.mx.blog.entity
 
-import com.mx.blog.DTO.UserDTO
-import com.mx.blog.DTO.UserRegisterDTO
+import com.mx.blog.DTO.User.UserDTO
+import com.mx.blog.DTO.User.UserRegisterDTO
 import java.time.LocalDateTime
 import javax.persistence.*
 

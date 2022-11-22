@@ -1,7 +1,7 @@
 package com.mx.blog.entity
 
-import com.mx.blog.DTO.ArticleBasicDTO
-import com.mx.blog.DTO.ArticleInfoDTO
+import com.mx.blog.DTO.article.ArticleBasicDTO
+import com.mx.blog.DTO.article.ArticleInfoDTO
 import javax.persistence.*
 
 @Entity

@@ -1,7 +1,7 @@
 package com.mx.blog.service
 
-import com.mx.blog.DTO.ArticleBasicDTO
-import com.mx.blog.DTO.ArticleInfoDTO
+import com.mx.blog.DTO.article.ArticleBasicDTO
+import com.mx.blog.DTO.article.ArticleInfoDTO
 import com.mx.blog.entity.Article
 import com.mx.blog.exception.ArticleIsNotExistedException
 import com.mx.blog.repository.ArticleRepository

@@ -1,13 +1,12 @@
 package com.mx.blog.service
 
-import com.mx.blog.DTO.UserDTO
-import com.mx.blog.DTO.UserLoginDTO
-import com.mx.blog.DTO.UserRegisterDTO
+import com.mx.blog.DTO.User.UserDTO
+import com.mx.blog.DTO.User.UserLoginDTO
+import com.mx.blog.DTO.User.UserRegisterDTO
 import com.mx.blog.entity.User
 import com.mx.blog.repository.UserRepository
 import com.mx.blog.utils.JWTUtils
 import org.springframework.stereotype.Service
-import java.time.LocalDateTime
 
 @Service
 class UserService(

@@ -1,9 +1,12 @@
 package com.mx.blog.service
 
+import com.mx.blog.DTO.AgreementRecord
 import com.mx.blog.entity.Agreement
 import com.mx.blog.entity.AgreementHistory
 import com.mx.blog.repository.AgreementHistoryRepository
 import com.mx.blog.repository.AgreementRepository
+import com.mx.blog.repository.ArticleRepository
+import com.mx.blog.repository.UserRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -12,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional
 class AgreementService(
     private val agreementRepository: AgreementRepository,
     private val agreementHistoryRepository: AgreementHistoryRepository,
+    private val articleRepository: ArticleRepository,
+    private val userRepository: UserRepository,
 ) {
     fun agreeArticle(articleId: Long, userId: Long): Agreement {
         return if (!isAgreed(articleId, userId)){
@@ -49,5 +54,16 @@ class AgreementService(
         val agreementResult = agreementRepository.findByArticleId(articleId) ?: Agreement(articleId = articleId, agreementNum = 1 )
         agreementResult.agreementNum--
         agreementRepository.save(agreementResult)
+    }
+
+    fun getAgreementRecords(userId: Long): List<AgreementRecord> {
+        val agreementHistory: List<AgreementHistory> = agreementHistoryRepository.findByUserId(userId)
+        return agreementHistory.map {
+            AgreementRecord(
+                articleTitle = articleRepository.findById(it.articleId).get().articleTitle,
+                agreementUserName = userRepository.findById(it.agreementUserId).get().userName,
+                agreementTime = it.agreementTime
+            )
+        }.toList()
     }
 }

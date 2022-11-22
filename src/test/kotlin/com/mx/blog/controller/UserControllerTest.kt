@@ -1,6 +1,6 @@
 package com.mx.blog.controller
 
-import com.mx.blog.DTO.UserLoginDTO
+import com.mx.blog.DTO.User.UserLoginDTO
 import com.mx.blog.service.UserService
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

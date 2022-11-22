@@ -1,5 +1,6 @@
 package com.mx.blog.controller
 
+import com.mx.blog.DTO.AgreementRecord
 import com.mx.blog.entity.Agreement
 import com.mx.blog.service.AgreementService
 import org.springframework.stereotype.Controller
@@ -16,7 +17,7 @@ class AgreementController(
         return agreementService.agreeArticle(articleId, userId)
     }
 
-    @PostMapping("/articles/{articleId}/agreements/cancel")
+    @DeleteMapping("/articles/{articleId}/agreements")
     @ResponseBody
     fun cancelArticleAgreement(@PathVariable articleId: Long, @RequestAttribute("userId") userId: Long): Boolean {
         return agreementService.cancelArticleAgreement(articleId, userId)
@@ -26,5 +27,11 @@ class AgreementController(
     @ResponseBody
     fun isArticleAgreed(@PathVariable articleId: Long, @RequestAttribute("userId") userId: Long): Boolean {
         return agreementService.isAgreed(articleId, userId)
+    }
+
+    @GetMapping("/users/agreements")
+    @ResponseBody
+    fun userAgreementRecords(@RequestAttribute("userId") userId: Long): List<AgreementRecord> {
+        return agreementService.getAgreementRecords(userId)
     }
 }

@@ -11,7 +11,7 @@ class InterceptorsConfig: WebMvcConfigurer {
         registry.addInterceptor(JWTInterceptors())
             .addPathPatterns("/**")
             .excludePathPatterns("/login")
-            .excludePathPatterns("/article/random")
+            .excludePathPatterns("/articles/random-articles")
             .excludePathPatterns("/register")
     }
 
