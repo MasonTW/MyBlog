@@ -33,8 +33,8 @@ class ArticleServiceTest {
             )
         )
 
-        Assertions.assertEquals(user.id, result.id)
-        Assertions.assertEquals(user.userAccount, result.userAccount)
+        Assertions.assertEquals(user.id, result.userId)
+        Assertions.assertEquals(user.userAccount, result.userName)
     }
 
 }

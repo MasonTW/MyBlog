@@ -28,7 +28,7 @@ class CollectionService(
 
     fun addArticle(articleId: Long, collectionId: Long): Boolean {
         val articleCollection = ArticleCollection(articleId = articleId, collectionId = collectionId)
-        var collection = collectionRepository.findById(collectionId).get()
+        val collection = collectionRepository.findById(collectionId).get()
         collection.articleNum++
         return try {
             articleCollectionRepository.save(articleCollection)

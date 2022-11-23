@@ -4,6 +4,7 @@ import com.mx.blog.DTO.User.UserDTO
 import com.mx.blog.DTO.User.UserLoginDTO
 import com.mx.blog.DTO.User.UserRegisterDTO
 import com.mx.blog.entity.User
+import com.mx.blog.exception.DuplicatedRegisterException
 import com.mx.blog.repository.UserRepository
 import com.mx.blog.utils.JWTUtils
 import org.springframework.stereotype.Service
@@ -18,9 +19,21 @@ class UserService(
         return User.toUserDTO(user)
     }
 
-    fun createUser(userRegisterDTO: UserRegisterDTO): User {
+    fun createUser(userRegisterDTO: UserRegisterDTO): UserDTO {
+        checkAccount(userRegisterDTO.userAccount)
         val newUser = User.toUser(userRegisterDTO)
-        return userRepository.save(newUser)
+        userRepository.save(newUser).let {
+            return UserDTO(
+                userId = it.id,
+                userName = it.userName
+            )
+        }
+    }
+
+    private fun checkAccount(userAccount: String) {
+        if ((userRepository.findByUserAccount(userAccount) != null)) {
+            throw DuplicatedRegisterException("This account:$userAccount has been registered")
+        }
     }
 
     fun login(userLoginDTO: UserLoginDTO): Boolean {

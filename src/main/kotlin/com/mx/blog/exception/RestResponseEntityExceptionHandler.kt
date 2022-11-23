@@ -13,4 +13,10 @@ class RestResponseEntityExceptionHandler {
     fun handleArticleIsNotExistedException(){
 
     }
+
+    @ExceptionHandler(DuplicatedRegisterException::class)
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    fun handleDuplicatedRegisterException(){
+
+    }
 }

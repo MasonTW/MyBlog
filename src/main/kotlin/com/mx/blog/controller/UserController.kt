@@ -6,6 +6,7 @@ import com.mx.blog.DTO.User.UserRegisterDTO
 import com.mx.blog.service.UserService
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
+import javax.validation.Valid
 
 @Controller
 class UserController(
@@ -28,12 +29,8 @@ class UserController(
 
     @PostMapping("/register")
     @ResponseBody
-    fun createUser(@RequestBody userRegisterDTO: UserRegisterDTO): UserDTO {
-        val createUser = userService.createUser(userRegisterDTO)
-        return UserDTO(
-            userId = createUser.id,
-            userName = createUser.userName
-        )
+    fun createUser(@Valid @RequestBody userRegisterDTO: UserRegisterDTO): UserDTO {
+        return userService.createUser(userRegisterDTO)
     }
 
 }
