@@ -16,13 +16,13 @@ class CommentController(
          return commentService.addComment(comment, articleId, userId)
     }
 
-    @PostMapping("/comments/{commentId}")
+    @DeleteMapping("/comments/{commentId}")
     @ResponseBody
     fun deleteComment(@PathVariable commentId: Long): Boolean {
         return commentService.deleteComment(commentId)
     }
 
-    @PostMapping("/articles/comments/{articleId}")
+    @GetMapping("/articles/{articleId}/comments")
     fun getArticleComments(@PathVariable articleId: Long): List<CommentDTO> {
         return commentService.getArticleComments(articleId)
     }

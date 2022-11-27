@@ -14,7 +14,7 @@ class CollectionController(
 ) {
     @GetMapping("/users/collections")
     @ResponseBody
-    fun getCollection(@RequestParam userId: Long): List<CollectionsDTO> {
+    fun getCollection(@RequestAttribute("userId") userId: Long): List<CollectionsDTO> {
         return collectionService.getCollections(userId)
     }
 
@@ -30,7 +30,7 @@ class CollectionController(
         return collectionService.addArticle(articleId, collectionId)
     }
 
-    @GetMapping("/users/collections/{collectionId}")
+    @GetMapping("/users/collections/{collectionId}/articles")
     @ResponseBody
     fun getCollectionArticles(@PathVariable collectionId: Long): List<ArticleInfoDTO> {
         return collectionService.getArticles(collectionId)
