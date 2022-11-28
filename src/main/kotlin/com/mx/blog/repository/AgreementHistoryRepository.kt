@@ -7,5 +7,4 @@ import java.util.*
 interface AgreementHistoryRepository: JpaRepository<AgreementHistory, Long> {
     fun findByAgreementUserIdAndArticleId(userId: Long, articleId: Long): Optional<AgreementHistory?>
     fun deleteByAgreementUserIdAndArticleId(userId: Long, articleId: Long)
-    fun findByUserId(userId: Long): List<AgreementHistory>
 }

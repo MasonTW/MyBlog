@@ -57,13 +57,14 @@ class AgreementService(
     }
 
     fun getAgreementRecords(userId: Long): List<AgreementRecord> {
-        val agreementHistory: List<AgreementHistory> = agreementHistoryRepository.findByUserId(userId)
-        return agreementHistory.map {
-            AgreementRecord(
-                articleTitle = articleRepository.findById(it.articleId).get().articleTitle,
-                agreementUserName = userRepository.findById(it.agreementUserId).get().userName,
-                agreementTime = it.agreementTime
-            )
-        }.toList()
+//        val agreementHistory: List<AgreementHistory> = agreementHistoryRepository.findByUserId(userId)
+//        return agreementHistory.map {
+//            AgreementRecord(
+//                articleTitle = articleRepository.findById(it.articleId).get().articleTitle,
+//                agreementUserName = userRepository.findById(it.agreementUserId).get().userName,
+//                agreementTime = it.agreementTime
+//            )
+//        }.toList()
+        return emptyList()
     }
 }

@@ -6,6 +6,7 @@ import com.mx.blog.entity.Article
 import com.mx.blog.exception.ArticleIsNotExistedException
 import com.mx.blog.repository.ArticleRepository
 import com.mx.blog.repository.UserRepository
+import org.springframework.data.crossstore.ChangeSetPersister
 import org.springframework.stereotype.Service
 
 @Service
@@ -28,19 +29,18 @@ class ArticleService(
     }
 
     fun deleteArticle(articleId: Long): Boolean {
-        return try {
+        try {
             val articleEntity = articleRepository.findById(articleId).get()
             articleEntity.deleted = true
             articleRepository.saveAndFlush(articleEntity)
-            true
-        } catch (e: Exception) {
-            false
+            return true
+        }catch (e: Exception) {
+            throw ArticleIsNotExistedException("article not found")
         }
     }
 
     fun getRandomTenArticles(): List<ArticleInfoDTO> {
         return articleRepository.findRandomArticles()
-            .filter { !it.deleted }
             .map { Article.toArticleInfoDTO(it) }
     }
 
@@ -54,7 +54,9 @@ class ArticleService(
     }
 
     fun getArticlesById(articleId: Long, userId: Long? = null): ArticleInfoDTO {
-        val article = articleRepository.findById(articleId).get()
+        val article = articleRepository.findById(articleId).orElseThrow {
+            throw ArticleIsNotExistedException("Article not found")
+        }
         if (article.deleted) {
             throw ArticleIsNotExistedException("Article has been deleted")
         }

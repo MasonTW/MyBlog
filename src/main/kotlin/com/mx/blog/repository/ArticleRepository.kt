@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query
 interface ArticleRepository: JpaRepository<Article, Long> {
   fun findAllByArticleUserId(userId: Long): List<Article>
 
-  @Query(value = "select * from article order by rand() limit 10", nativeQuery = true)
+  @Query(value = "select * from article where deleted = false order by rand() limit 10", nativeQuery = true)
   fun findRandomArticles(): List<Article>
 
 }
