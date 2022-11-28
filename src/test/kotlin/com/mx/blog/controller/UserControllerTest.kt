@@ -95,7 +95,7 @@ class UserControllerTest {
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(userRegisterDTO))
 
-        mockmvc.perform(request).andExpect(status().isBadRequest)
+        mockmvc.perform(request).andExpect(status().isUnprocessableEntity)
 
         verify(mockUserService, times(1)).createUser(userRegisterDTO)
     }
