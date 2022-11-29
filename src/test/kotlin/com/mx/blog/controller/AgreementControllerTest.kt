@@ -76,7 +76,7 @@ class AgreementControllerTest {
             mockmvc.perform(request)
                 .andExpect(status().isUnauthorized)
 
-            verify(mockAgreementService, never()).isAgreed(any(), any())
+            verify(mockAgreementService, never()).checkAgreement(any(), any())
         }
 
         @Test
@@ -127,7 +127,7 @@ class AgreementControllerTest {
         mockmvc.perform(request)
             .andExpect(status().isOk)
 
-        verify(mockAgreementService, times(1)).isAgreed(articleId, userId)
+        verify(mockAgreementService, times(1)).checkAgreement(articleId, userId)
     }
 
     @Test

@@ -26,7 +26,7 @@ class AgreementController(
     @GetMapping("/articles/{articleId}/agreements")
     @ResponseBody
     fun isArticleAgreed(@PathVariable articleId: Long, @RequestAttribute("userId") userId: Long): Boolean {
-        return agreementService.isAgreed(articleId, userId)
+        return agreementService.checkAgreement(articleId, userId)
     }
 
     @GetMapping("/users/agreements")
