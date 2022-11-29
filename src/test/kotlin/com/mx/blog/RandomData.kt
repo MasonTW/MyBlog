@@ -26,12 +26,12 @@ object RandomData {
         )
     }
 
-    fun generateUser(userId: Long = Random.nextLong()): User {
+    fun generateUser(userId: Long = Random.nextLong(), userName: String = randomString()): User {
         return User(
             id = userId,
             userAccount = randomString(),
             userPassword = randomString(),
-            userName = randomString(),
+            userName = userName,
             userRegisterTime = randomString()
         )
     }
