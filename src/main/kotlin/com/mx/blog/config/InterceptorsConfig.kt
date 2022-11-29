@@ -12,7 +12,7 @@ class InterceptorsConfig: WebMvcConfigurer {
             .addPathPatterns("/**")
             .excludePathPatterns("/login")
             .excludePathPatterns("/articles/random-articles")
-            .excludePathPatterns("/register")
+            .excludePathPatterns("/register","/swagger-ui/**","/v2/api-docs/**","/swagger-resources/**")
     }
 
 
