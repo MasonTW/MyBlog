@@ -6,7 +6,7 @@ import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
-class User(
+data class User(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) var id: Long = -1,
     var userAccount: String,
     var userName: String,

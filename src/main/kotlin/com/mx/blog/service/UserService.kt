@@ -5,6 +5,7 @@ import com.mx.blog.DTO.User.UserLoginDTO
 import com.mx.blog.DTO.User.UserRegisterDTO
 import com.mx.blog.entity.User
 import com.mx.blog.exception.DuplicatedRegisterException
+import com.mx.blog.exception.NotSuchUserException
 import com.mx.blog.repository.UserRepository
 import com.mx.blog.utils.JWTUtils
 import org.springframework.stereotype.Service
@@ -15,8 +16,10 @@ class UserService(
 ) {
 
     fun findUserById(id: Long): UserDTO {
-        val user = userRepository.findById(id).get()
-        return User.toUserDTO(user)
+        return userRepository.findByIdAndDeleted(id, false)?.let {
+            User.toUserDTO(it)
+        } ?: throw NotSuchUserException("no such user")
+
     }
 
     fun createUser(userRegisterDTO: UserRegisterDTO): UserDTO {
@@ -30,23 +33,16 @@ class UserService(
         }
     }
 
-    private fun checkAccount(userAccount: String) {
-        if ((userRepository.findByUserAccount(userAccount) != null)) {
-            throw DuplicatedRegisterException("This account:$userAccount has been registered")
-        }
-    }
-
     fun login(userLoginDTO: UserLoginDTO): Boolean {
-        val findResult = userRepository.findByUserAccountAndUserPassword(
+        return userRepository.findByUserAccountAndUserPassword(
             userAccount = userLoginDTO.userAccount,
             userPassword = userLoginDTO.userPassword
-        )
-        return if (findResult != null){
-            val user = UserDTO(userId = findResult.id, userName = findResult.userName)
+        )?.let {
+            val user = UserDTO(userId = it.id, userName = it.userName)
             val token = JWTUtils.getToken(user = user)
             println(token)
             return true
-        } else false
+        } ?: false
     }
 
     fun deleteUser(userId: Long): Boolean {
@@ -54,10 +50,16 @@ class UserService(
         val user = userRepository.findById(userId).get()
         return if (user == null || user.deleted) {
             false
-        }else {
+        } else {
             user.deleted = true
             userRepository.saveAndFlush(user)
             true
+        }
+    }
+
+    private fun checkAccount(userAccount: String) {
+        if ((userRepository.findByUserAccount(userAccount) != null)) {
+            throw DuplicatedRegisterException("This account:$userAccount has been registered")
         }
     }
 }

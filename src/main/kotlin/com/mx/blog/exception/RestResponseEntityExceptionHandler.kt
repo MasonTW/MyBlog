@@ -15,7 +15,7 @@ class RestResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(DuplicatedRegisterException::class)
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
     fun handleDuplicatedRegisterException(){
 
     }
