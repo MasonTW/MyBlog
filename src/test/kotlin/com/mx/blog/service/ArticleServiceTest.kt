@@ -65,7 +65,7 @@ class ArticleServiceTest {
             })
         }
 
-        whenever(mockUserRepository.findByUserName(any())).thenReturn(generateUser(userId, userName))
+        whenever(mockUserRepository.findAllByUserName(any())).thenReturn(listOf(generateUser(userId, userName)))
         whenever(mockArticleRepository.findAllByArticleUserId(userId)).thenReturn(apply)
 
         articleService.getArticlesByUserName(userName).let {

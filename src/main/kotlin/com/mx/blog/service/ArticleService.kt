@@ -21,10 +21,12 @@ class ArticleService(
     }
 
     fun getArticlesByUserName(userName: String): List<ArticleInfoDTO> {
-        val userId = userRepository.findByUserName(userName).id
-        return articleRepository.findAllByArticleUserId(userId)
-            .filter { !it.deleted }
-            .map { Article.toArticleInfoDTO(it) }
+        val users = userRepository.findAllByUserName(userName)
+        return users.map { user ->
+            articleRepository.findAllByArticleUserId(user.id)
+                .filter { !it.deleted }
+                .map { Article.toArticleInfoDTO(it) }
+        }.flatten().toList()
     }
 
     fun deleteArticle(articleId: Long): Boolean {

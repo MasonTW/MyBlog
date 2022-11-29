@@ -15,11 +15,9 @@ import org.springframework.transaction.annotation.Transactional
 class AgreementService(
     private val agreementRepository: AgreementRepository,
     private val agreementHistoryRepository: AgreementHistoryRepository,
-    private val articleRepository: ArticleRepository,
-    private val userRepository: UserRepository,
 ) {
     fun agreeArticle(articleId: Long, userId: Long): Agreement {
-        return if (!isAgreed(articleId, userId)){
+        return if (!checkAgreement(articleId, userId)){
             val newAgreementRecord = AgreementHistory(
                 articleId = articleId,
                 agreementTime = System.currentTimeMillis().toString(),
@@ -38,12 +36,12 @@ class AgreementService(
         return agreementRepository.save(agreementResult)
     }
 
-    fun isAgreed(articleId: Long, userId: Long): Boolean {
+    fun checkAgreement(articleId: Long, userId: Long): Boolean {
         return agreementHistoryRepository.findByAgreementUserIdAndArticleId(userId, articleId).isPresent
     }
 
     fun cancelArticleAgreement(articleId: Long, userId: Long): Boolean {
-        if (isAgreed(articleId,userId)) {
+        if (checkAgreement(articleId,userId)) {
             decreaseAgreementNum(articleId)
             agreementHistoryRepository.deleteByAgreementUserIdAndArticleId(userId, articleId)
         }

@@ -5,7 +5,7 @@ import com.mx.blog.DTO.User.UserLoginDTO
 import com.mx.blog.DTO.User.UserRegisterDTO
 import com.mx.blog.entity.User
 import com.mx.blog.exception.DuplicatedRegisterException
-import com.mx.blog.exception.NotSuchUserException
+import com.mx.blog.exception.NoSuchUserException
 import com.mx.blog.repository.UserRepository
 import com.mx.blog.utils.JWTUtils
 import org.springframework.stereotype.Service
@@ -18,7 +18,7 @@ class UserService(
     fun findUserById(id: Long): UserDTO {
         return userRepository.findByIdAndDeleted(id, false)?.let {
             User.toUserDTO(it)
-        } ?: throw NotSuchUserException("no such user")
+        } ?: throw NoSuchUserException("no such user")
 
     }
 

@@ -6,7 +6,7 @@ import com.mx.blog.RandomData.generateUser
 import com.mx.blog.RandomData.randomString
 import com.mx.blog.entity.User
 import com.mx.blog.exception.DuplicatedRegisterException
-import com.mx.blog.exception.NotSuchUserException
+import com.mx.blog.exception.NoSuchUserException
 import com.mx.blog.repository.UserRepository
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -47,7 +47,7 @@ class UserServiceTest {
     fun `should throw NotSuchUserException when user does not exist or be deleted`() {
         whenever(mockUserRepository.findByIdAndDeleted(userId)).thenReturn(null)
 
-        assertThrows<NotSuchUserException> {
+        assertThrows<NoSuchUserException> {
             userService.findUserById(userId)
         }
     }
