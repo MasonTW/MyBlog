@@ -1,15 +1,14 @@
 package com.mx.blog.service
 
 import com.mx.blog.DTO.article.ArticleBasicDTO
-import com.mx.blog.RandomData
 import com.mx.blog.RandomData.generateArticle
 import com.mx.blog.RandomData.generateUser
 import com.mx.blog.RandomData.randomString
 import com.mx.blog.entity.Article
-import com.mx.blog.entity.User
 import com.mx.blog.exception.ArticleIsNotExistedException
 import com.mx.blog.repository.ArticleRepository
 import com.mx.blog.repository.UserRepository
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.mockito.Mockito
@@ -46,6 +45,7 @@ class ArticleServiceTest {
         articleService.createArticle(articleBasicDTO, usrId).let {
             assertEquals(articleBasicDTO.articleTitle, it.articleTitle)
             assertEquals(articleBasicDTO.articleContent, it.articleContent)
+            assertThat(articleBasicDTO.articleTitle).isEqualTo(it.articleTitle)
         }
 
     }
@@ -65,7 +65,7 @@ class ArticleServiceTest {
             })
         }
 
-        whenever(mockUserRepository.findByUserName(any())).thenReturn(generateUser(userId))
+        whenever(mockUserRepository.findByUserName(any())).thenReturn(generateUser(userId, userName))
         whenever(mockArticleRepository.findAllByArticleUserId(userId)).thenReturn(apply)
 
         articleService.getArticlesByUserName(userName).let {

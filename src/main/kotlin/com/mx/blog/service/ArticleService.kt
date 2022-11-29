@@ -6,7 +6,6 @@ import com.mx.blog.entity.Article
 import com.mx.blog.exception.ArticleIsNotExistedException
 import com.mx.blog.repository.ArticleRepository
 import com.mx.blog.repository.UserRepository
-import org.springframework.data.crossstore.ChangeSetPersister
 import org.springframework.stereotype.Service
 
 @Service
@@ -68,7 +67,7 @@ class ArticleService(
 
     private fun checkAgreement(articleId: Long, userId: Long?): Boolean {
         return userId?.let {
-            agreementService.isAgreed(articleId, userId)
+            agreementService.checkAgreement(articleId, userId)
         } ?: false
     }
 
