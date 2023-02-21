@@ -6,6 +6,7 @@ plugins {
     kotlin("jvm") version "1.6.21"
     kotlin("plugin.spring") version "1.6.21"
     kotlin("plugin.jpa") version "1.6.21"
+    id("org.flywaydb.flyway") version "7.12.1"
 }
 
 group = "com.mx"
@@ -33,6 +34,7 @@ dependencies {
     implementation("com.auth0:java-jwt:4.0.0")
     implementation("junit:junit:4.13.1")
 //    implementation("io.springfox:springfox-swagger2:3.0.0")
+    implementation("org.flywaydb:flyway-core:7.12.1")
     implementation("io.springfox:springfox-boot-starter:3.0.0")
     compileOnly("org.projectlombok:lombok")
     runtimeOnly("mysql:mysql-connector-java:8.0.25")
