@@ -58,7 +58,6 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    command: ["java", "-jar", "/app/blog-0.0.1-SNAPSHOT.jar"]
     environment:
       - SPRING_PROFILES_ACTIVE=docker
 
