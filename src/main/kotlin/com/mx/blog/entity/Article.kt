@@ -16,21 +16,22 @@ class Article(
     var articleCollectionNum: Int = 0,
     var articleUserId: Long,
     var deleted: Boolean = false,
-    @OneToOne(targetEntity = Agreement::class, cascade = [CascadeType.ALL])
-    var agreement: Agreement?,
-    @OneToMany(targetEntity = Comment::class, cascade = [CascadeType.ALL], mappedBy = "articleId")
-    var comments: MutableList<Comment>,
 ) {
-    companion object{
-        fun toArticleInfoDTO(article: Article, isAuthor: Boolean = false, isAgreed: Boolean = false): ArticleInfoDTO {
-            val agreement = article.agreement
+    companion object {
+        fun toArticleInfoDTO(
+            article: Article,
+            isAuthor: Boolean = false,
+            isAgreed: Boolean = false,
+            agreement: Agreement? = null,
+            comments: List<Comment> = emptyList(),
+        ): ArticleInfoDTO {
             return ArticleInfoDTO(
                 articleTitle = article.articleTitle,
                 articleContent = article.articleContent,
                 articleStar = article.articleStar,
                 articleCollectionNum = article.articleCollectionNum,
                 articleLookTimes = article.articleLookTimes,
-                commentsNum = article.comments.size.toLong(),
+                commentsNum = comments.size.toLong(),
                 agreementNum = agreement?.agreementNum ?: 0,
                 relationship = ArticleInfoDTO.Relationship(isAuthor, isAgreed)
             )
@@ -43,8 +44,6 @@ class Article(
                 articleAddTime = System.currentTimeMillis().toString(),
                 articleUpdateTime = System.currentTimeMillis().toString(),
                 articleUserId = userid,
-                comments = mutableListOf(),
-                agreement = null
             )
         }
     }

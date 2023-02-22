@@ -4,6 +4,7 @@ import com.mx.blog.DTO.article.ArticleBasicDTO
 import com.mx.blog.DTO.article.ArticleInfoDTO
 import com.mx.blog.entity.Article
 import com.mx.blog.exception.ArticleIsNotExistedException
+import com.mx.blog.repository.AgreementRepository
 import com.mx.blog.repository.ArticleRepository
 import com.mx.blog.repository.UserRepository
 import org.springframework.stereotype.Service
@@ -13,7 +14,10 @@ class ArticleService(
     private val articleRepository: ArticleRepository,
     private val userRepository: UserRepository,
     private val agreementService: AgreementService,
+    private val agreementRepository: AgreementRepository,
 ) {
+
+
     fun createArticle(articleBasicDTO: ArticleBasicDTO, userid: Long): ArticleInfoDTO {
         val newArticle = Article.toArticle(articleBasicDTO, userid)
         val saveResult = articleRepository.save(newArticle)
@@ -58,13 +62,14 @@ class ArticleService(
         val article = articleRepository.findById(articleId).orElseThrow {
             throw ArticleIsNotExistedException("Article not found")
         }
+        val agreement = agreementRepository.findByArticleId(articleId)
         if (article.deleted) {
             throw ArticleIsNotExistedException("Article has been deleted")
         }
 
         val isAuthor = checkArticleRelationship(articleId, userId)
         val isAgreed = checkAgreement(articleId, userId)
-        return Article.toArticleInfoDTO(article, isAuthor, isAgreed)
+        return Article.toArticleInfoDTO(article, isAuthor, isAgreed, agreement)
     }
 
     private fun checkAgreement(articleId: Long, userId: Long?): Boolean {

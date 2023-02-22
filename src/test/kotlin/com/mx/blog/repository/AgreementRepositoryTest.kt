@@ -1,8 +1,8 @@
 package com.mx.blog.repository
 
-import com.mx.blog.RandomData.generateUser
-import com.mx.blog.RandomData.randomString
+import com.mx.blog.RandomData.generateArticle
 import com.mx.blog.entity.Agreement
+import com.mx.blog.entity.Article
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.runner.RunWith

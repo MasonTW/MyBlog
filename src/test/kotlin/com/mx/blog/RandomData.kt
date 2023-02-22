@@ -21,8 +21,6 @@ object RandomData {
             articleUpdateTime = randomString(),
             articleAddTime =randomString(),
             articleUserId = userId,
-            agreement = null,
-            comments = mutableListOf()
         )
     }
 
