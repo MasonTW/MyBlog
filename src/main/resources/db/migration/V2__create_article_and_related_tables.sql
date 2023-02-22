@@ -10,13 +10,7 @@ create table article
     article_title          varchar(255) null,
     article_update_time    varchar(255) null,
     article_user_id        bigint       not null,
-    deleted                bit          not null,
-    article_agreement_id   bigint       null,
-    agreement_agreement_id bigint       null,
-    constraint FKosl32461yw29riajqdg02r01k
-        foreign key (agreement_agreement_id) references agreement (agreement_id),
-    constraint fk_article_agreement
-        foreign key (article_agreement_id) references agreement (agreement_id)
+    deleted                bit          not null
 );
 
 create table article_collection
