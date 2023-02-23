@@ -33,4 +33,6 @@ object RandomData {
             userRegisterTime = randomString()
         )
     }
+
+    fun aa() = "aa"
 }
