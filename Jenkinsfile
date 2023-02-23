@@ -8,12 +8,8 @@ pipeline {
       }
     }
 
-    stage('Install dependencies') {
+    stage('Build') {
       steps {
-        sh 'curl -s https://get.sdkman.io | bash'
-        sh 'source $HOME/.sdkman/bin/sdkman-init.sh && sdk install java'
-        sh 'source $HOME/.sdkman/bin/sdkman-init.sh && sdk install kotlin'
-        sh 'source $HOME/.sdkman/bin/sdkman-init.sh && sdk install gradle'
         sh './gradlew clean build --no-daemon'
       }
     }
