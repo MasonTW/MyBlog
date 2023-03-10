@@ -1,12 +1,12 @@
 version: '3'
 services:
   build:
-    image: adoptopenjdk/openjdk11:alpine-slim
+    image: gradle:7.5.0-jdk11
     volumes:
       - .:/app
     working_dir: /app/
     entrypoint:
-      ./gradlew build
+      ./gradlew build -x test
     depends_on:
       testDb:
         condition: service_healthy
