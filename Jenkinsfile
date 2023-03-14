@@ -10,6 +10,7 @@ pipeline {
          }
     stage('Run tests') {
           steps {
+            sh 'ls -al'
             sh 'docker compose up test'
           }
         }
