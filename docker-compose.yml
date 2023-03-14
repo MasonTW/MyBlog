@@ -25,7 +25,7 @@ services:
         - "3307:3306"
 
   test:
-    image: adoptopenjdk/openjdk11:alpine-slim
+    image: gradle:7.5-jdk11-alpine
     volumes:
       - .:/app
     working_dir: /app/
