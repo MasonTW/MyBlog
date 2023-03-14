@@ -2,6 +2,12 @@ pipeline {
   agent any
 
   stages {
+
+    stage('show content') {
+           steps {
+             sh 'ls -al'
+           }
+         }
     stage('Run tests') {
           steps {
             sh 'docker compose up test'
