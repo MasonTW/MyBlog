@@ -6,6 +6,7 @@ pipeline {
     stage('show content') {
            steps {
              sh 'ls -al'
+             sh 'pwd'
            }
          }
     stage('Run tests') {
