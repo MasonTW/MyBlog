@@ -9,6 +9,11 @@ pipeline {
              sh 'pwd'
            }
          }
+    stage('show pwd') {
+               steps {
+                 sh 'pwd'
+               }
+             }
     stage('Run tests') {
           steps {
             sh 'ls -al'
