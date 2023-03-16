@@ -33,6 +33,12 @@ pipeline {
       }
     }
 
+     stage('Clean container') {
+          steps {
+            sh 'docker compose down'
+          }
+        }
+
   }
 }
 
