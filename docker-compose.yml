@@ -6,7 +6,7 @@ services:
       - /mydat/jenkins_home:/app
     working_dir: /app/workspace/blog
     entrypoint:
-      pwd
+      gradle build -x test
 
   testDb:
     hostname: dockerTestDB
@@ -40,7 +40,7 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=docker
     entrypoint:
-      ls -al
+      gradle test
 
   db:
     hostname: dockerDB
