@@ -4,7 +4,7 @@ services:
     image: gradle:7.5-jdk11-alpine
     volumes:
       - /var/jenkins_home:/app
-    working_dir: /app/workspace/myblog
+    working_dir: /app/workspace/myBlog
     entrypoint:
       gradle build -x test
 
@@ -28,7 +28,7 @@ services:
     image: gradle:7.5-jdk11-alpine
     volumes:
       - /var/jenkins_home:/app
-    working_dir: /app/workspace/myblog
+    working_dir: /app/workspace/myBlog
     depends_on:
       testDb:
         condition: service_healthy
